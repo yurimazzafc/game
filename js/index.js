@@ -3,36 +3,52 @@ var objeto = document.getElementById('objeto');
 objeto.x = window.innerWidth / 2;
 objeto.y = window.innerHeight / 2;
 objeto.quadro = 0;
+objeto.size = 100;
 
 var body = document.getElementsByTagName('body')[0];
 body.addEventListener('keydown', function(e){
-	moveObjeto(e.keyCode);	
+	moveObjeto(e.keyCode);
+	moveCenario(e.keyCode);
 });
 
 window.moveObjeto = function(key) {
+	
 	switch(key)
 	{
 		case 37:
-			objeto.x -= 20;
-			objeto.quadro -= 20;
+			if(objeto.x > 0)
+			{
+				objeto.x -= 20;
+				objeto.quadro -= 20;
+			}
 			mudaObjeto('right');
 			break;
 		case 38:
-			objeto.y -= 20;
-			objeto.quadro -= 20;
+			if(objeto.y > 0)
+			{
+				objeto.y -= 20;
+				objeto.quadro -= 20;
+			}
 			mudaObjeto('up');
 			break;
 		case 39:
-			objeto.x += 20;
-			objeto.quadro += 20;
+			if(objeto.x + objeto.size < window.innerWidth)
+			{
+				objeto.x += 20;
+				objeto.quadro += 20;
+			}
 			mudaObjeto('left');
 			break;
 		case 40:
-			objeto.y += 20;
-			objeto.quadro -= 20;
+			if(objeto.y + objeto.size < window.innerHeight)
+			{
+				objeto.y += 20;
+				objeto.quadro += 20;
+			}
 			mudaObjeto('down');
 			break;
 	}
+	
 	objeto.style.top = objeto.y + 'px';
 	objeto.style.left = objeto.x + 'px';
 };
@@ -45,16 +61,34 @@ window.mudaObjeto = function(direcao) {
 	switch(direcao)
 	{
 		case 'left':
-			objeto.style.backgroundImage = "url('img/left-0"+quadro+".svg')";
+			objeto.style.backgroundImage = "url('img/player/left-0"+quadro+".svg')";
 			break;
 		case 'right':
-			objeto.style.backgroundImage = "url('img/right-0"+quadro+".svg')";
+			objeto.style.backgroundImage = "url('img/player/right-0"+quadro+".svg')";
 			break;
 		case 'down':
-			objeto.style.backgroundImage = "url('img/down-0"+quadro+".svg')";
+			objeto.style.backgroundImage = "url('img/player/down-0"+quadro+".svg')";
 			break;
 		case 'up':
-			objeto.style.backgroundImage = "url('img/up-0"+quadro+".svg')";
+			objeto.style.backgroundImage = "url('img/player/up-0"+quadro+".svg')";
 			break;
 	}
 };
+
+window.moveCenario = function(key) {
+	switch(key)
+	{
+		case 37:
+			document.body.style.backgroundPositionX = '0px';
+			break;
+		case 38:
+			document.body.style.backgroundPositionY = '0px';
+			break;
+		case 39:
+			document.body.style.backgroundPositionX = '0px';
+			break;
+		case 40:
+			document.body.style.backgroundPositionY = '0px';
+			break;
+	}
+}
